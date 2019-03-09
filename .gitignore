@@ -2,4 +2,3 @@
 !.gitignore
 kernel.headers
 bins/*
-kernel-new.elf
