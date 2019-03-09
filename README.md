@@ -2,7 +2,7 @@
 
 (C) Sergey Sergeev, 2019
 
-All that you do is is at your own risk!
+All that you do is at your own risk!
 The author has not liable for any of you actions and their consequences!
 This code is presented as is and is solely for educational purposes ONLY!
 
