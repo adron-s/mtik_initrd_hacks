@@ -12,3 +12,6 @@ LD=$STAGING_DIR/bin/arm-openwrt-linux-ld
 
 $GCC -static ./init.c -o ../cpio-fs/init
 $OC --strip-all ../cpio-fs/init ../cpio-fs/init
+
+cd ../
+./pack.sh
