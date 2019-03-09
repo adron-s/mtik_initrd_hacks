@@ -10,6 +10,6 @@ This code is presented as is and is solely for educational purposes ONLY!
 2) Netboot with kernel-new.elf
 3) telnet x.x.x.x 22111
 
-Все  вы делаете на свой страх и риск!
+Все что вы делаете, вы делаете на свой страх и риск!
 Автор не несет никакой ответственности за ваши действия и их последствия!
 Данный код представляется as-is и исключительно в учебных целях!
