@@ -1,4 +1,8 @@
 #!/bin/sh
+#
+#(C) Sergey Sergeev aka adron, 2019
+#
+
 
 OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-ipq806x
 export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-arm_cortex-a15+neon-vfpv4_gcc-7.4.0_musl_eabi

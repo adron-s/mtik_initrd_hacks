@@ -1,3 +1,8 @@
+/*
+ * (C) Sergey Sergeev aka adron, 2019
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

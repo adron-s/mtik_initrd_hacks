@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+#(C) Sergey Sergeev aka adron, 2019
+#
 
 exit 0
 
