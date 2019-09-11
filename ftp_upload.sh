@@ -1,7 +1,5 @@
 #!/bin/sh
 
-WORKDIR="/home/prog/openwrt/lede-all/new-lede-rb941/source"
-
 HOST="172.20.1.1"
 USER="admin"
 PASS=${FTP_UPLOAD_PASS}

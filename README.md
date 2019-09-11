@@ -7,7 +7,7 @@ The author has not liable for any of you actions and their consequences!
 This code is presented as is and is solely for educational purposes ONLY!
 
 0) Use RouterOS 6.44 or 7.0b1!
-1) Upload content of ./for_ftp_upload/* to target RouterOS device via FTP
+1) Upload(using FTP) content of ./for_ftp_upload/* to /pub folder on target RouterOS device
 2) Netboot with kernel-new.elf
 3) telnet x.x.x.x 22111
 
@@ -27,6 +27,6 @@ For Developers:
 	cd ..
 	Make the necessary changes to the ./cpio-fs(compile add add busybox, etc...)
 	In the end, when everything is ready, to get ./bins/kernel-new.elf, run: ./pack-kernel.sh
-	Upload content of ./for_ftp_upload/* to target RouterOS device via FTP(to /flash/rw/disk/)
+	Upload content of ./for_ftp_upload/* to target RouterOS device via FTP(to /pub)
 	Put ./bins/kernel-new.elf to your tftp and Netboot from it
 	telnet x.x.x.x 22111
