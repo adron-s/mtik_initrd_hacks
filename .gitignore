@@ -5,3 +5,6 @@ bins/*
 finder/kernel-extractor
 finder/finder
 ros/*
+init/init.objdump
+init/oldinit.objdump
+

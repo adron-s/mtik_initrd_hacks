@@ -1,7 +1,8 @@
 #!/bin/sh
 
-TARGET=./ros/routeros-arm-6.44.npk
+#TARGET=./ros/routeros-arm-6.44.npk
 #TARGET=./ros/routeros-7.0beta1-arm.npk
+TARGET=${1}
 FS_BEGIN_OFFSET=4096
 
 get_squashfs_size(){

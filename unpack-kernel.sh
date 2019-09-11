@@ -84,6 +84,14 @@ truncate_kernel_p3(){
 	rm ./bins/kernel.p3-stripped.xz
 }
 
+extract_kernel_cpiofs(){
+	local ROOT=$(pwd)
+	rm -Rf ./cpio-fs
+	mkdir ./cpio-fs
+	cd ./cpio-fs
+	xzcat ${ROOT}/bins/kernel.p3.xz | cpio -idv
+}
+
 unpack_kernel_bin
 
 ( xz -dc --single-stream > ./bins/initramfs.cpio && cat > ./bins/p3-garbage.bin ) < ./bins/kernel.p3.xz
@@ -94,9 +102,4 @@ unpack_kernel_bin
 
 extract_kernel_elf
 
-exit 0
-
-rm -Rf cpio-fs
-mkdir cpio-fs
-cd cpio-fs
-cpio -idv < ../bins/initramfs.cpio
+#extract_kernel_cpiofs
