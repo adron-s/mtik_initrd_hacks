@@ -2,3 +2,6 @@
 !.gitignore
 kernel.headers
 bins/*
+finder/kernel-extractor
+finder/finder
+ros/*
