@@ -1,4 +1,4 @@
-ROOT=/flash/rw/disk/pub/OWL
+ROOT=${1}/OWL
 cd $ROOT
 [ -f $ROOT/bin/busybox -a ! -f $ROOT/bin/sh  ] && {
 	echo "Initializing busybox"
