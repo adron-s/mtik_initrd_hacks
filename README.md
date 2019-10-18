@@ -6,10 +6,10 @@ All that you do is at your own risk!
 The author has not liable for any of you actions and their consequences!
 This code is presented as is and is solely for educational purposes ONLY!
 
-0) Use RouterOS 6.44 or 7.0b1!
+0) Use RouterOS 6.45.6 or 7.0b1!
 1) Upload(using FTP) content of ./for_ftp_upload/pub/* to /pub
-     (or /flash/rw/disk/pub) folder on target RouterOS device
-2) Netboot with kernel-new.elf
+     (or /flash or /flash/rw/disk/pub) folder on target RouterOS device
+2) Netboot(via bootp and tftp) with kernel-new.elf
 3) telnet x.x.x.x 22111
 
 Все что вы делаете, вы делаете на свой страх и риск!
@@ -21,13 +21,14 @@ For Developers:
 	cd ./finder
 	./Build.sh
 	cd ..
-	./unpack-npk.sh ./ros/routeros-7.0beta1-arm.npk
+	edit ./globals.sh and set your target device ARCH: arm or mips
+	./unpack-npk.sh ./ros/routeros-mipsbe-6.45.6.npk
 	./unpack-kernel.sh
 	cd ./init
-	./compile_for_arm.sh
+	./compile.sh
 	cd ..
-	Make the necessary changes to the ./cpio-fs(compile add add busybox, etc...)
+	Make the necessary changes to the ./cpio-fs-ARCH(compile add add busybox, etc...)
 	In the end, when everything is ready, to get ./bins/kernel-new.elf, run: ./pack-kernel.sh
-	Upload content of ./for_ftp_upload/pub/* to target RouterOS device via FTP(to /pub or /flash/rw/disk/pub)
+	Upload content of ./for_ftp_upload/pub/* to target RouterOS device via FTP(to /pub or /flash or ...)
 	Put ./bins/kernel-new.elf to your tftp and Netboot from it
 	telnet x.x.x.x 22111

@@ -3,6 +3,8 @@
 #(C) Sergey Sergeev aka adron, 2019
 #
 
+. ./globals.sh
+
 _kernel_bin_binwalk=""
 kernel_bin_binwalk(){
 	[ -z "${_kernel_bin_binwalk}" ] && \
@@ -86,10 +88,11 @@ truncate_kernel_p3(){
 
 extract_kernel_cpiofs(){
 	local ROOT=$(pwd)
-	rm -Rf ./cpio-fs
-	mkdir ./cpio-fs
-	cd ./cpio-fs
+	rm -Rf ./cpio-fs-${TARGET_ARCH}
+	mkdir ./cpio-fs-${TARGET_ARCH}
+	cd ./cpio-fs-${TARGET_ARCH}
 	xzcat ${ROOT}/bins/kernel.p3.xz | cpio -idv
+	cp ./init ./oldinit
 }
 
 unpack_kernel_bin
@@ -102,4 +105,6 @@ unpack_kernel_bin
 
 extract_kernel_elf
 
-#extract_kernel_cpiofs
+#if cpio-fs dir is empty
+ls -1qA ./cpio-fs-mips/ | grep -q . || \
+extract_kernel_cpiofs
