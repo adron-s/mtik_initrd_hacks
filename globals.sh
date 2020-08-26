@@ -3,8 +3,8 @@
 #(C) Sergey Sergeev aka adron, 2019
 #
 
-#TARGET_ARCH="arm"
-TARGET_ARCH="mips"
+TARGET_ARCH="arm"
+#TARGET_ARCH="mips"
 
 [ ${TARGET_ARCH} = "arm" ] && {
 	OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-ipq806x

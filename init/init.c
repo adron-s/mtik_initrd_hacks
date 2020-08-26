@@ -21,26 +21,28 @@ void my_system(char *cmd, char *arg1, char *arg2, char *arg3){
 	waitpid(pid, NULL, 0);
 }
 
-static char work_dir1[ ] = "/flash/rw/disk/pub";
-static char work_dir2[ ] = "/flash/rw/disk/flash/rw/disk/pub";
-static char *work_dir = work_dir1;
+static char *work_dirs[ ] = { "/flash/rw/disk/pub", "/flash/rw/disk/flash/rw/disk/pub", NULL };
 void daemonized_OWL(void){
 	int a = 0;
+	int ret = 0;
 	static char bin_busybox[128];
 	static char owl_sh[128];
 	struct stat sb;
+	int work_dir_x = 0;
+	char *work_dir = NULL;
 	while(1){
-		/* if(a++ % 10 == 0){
-			printf("OWL is here! %d\n", a);
-		}*/
-		do{ //autodetect work_dir
-			if(work_dir == work_dir1)
-				work_dir = work_dir2;
-			else
-				work_dir = work_dir1;
+		do{//autodetect work_dir
+			work_dir = work_dirs[work_dir_x++];
+			if(!work_dir){
+				work_dir_x = 0;
+				continue;
+			}
 			printf("%d: Trying work_dir: '%s'\n", a++, work_dir);
-			sleep(5);
-		}while(stat(work_dir, &sb) != 0);
+			memset(&sb, 0x0, sizeof(sb));
+			sleep(5); //at first fast run it always return -1
+			ret = stat(work_dir, &sb);
+			printf("stat() ret := %d\n", ret);
+		}while(ret != 0);
 		printf("work_dir found at: '%s'\n", work_dir);
 		snprintf(bin_busybox, sizeof(bin_busybox), "%s/OWL/bin/busybox", work_dir);
 		snprintf(owl_sh, sizeof(owl_sh), "%s/OWL.sh", work_dir);
