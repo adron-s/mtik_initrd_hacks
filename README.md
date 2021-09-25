@@ -15,10 +15,12 @@ busybox and then launch the telnetd service. To run Linux kernel with modified i
 uses the standard RouterBOOT ability - loading via the network using dhcp/bootp and tftp
 server. dhcp/bootp server can be deployed on another device with RouterOS and OpenWRT or
 even tftp32 program. For a one-time launch with tftp, You can use this commands in RouterOS:
+	
 	/system/routerboard/settings/set boot-device=try-ethernet-once-then-nand
 	/system/reboot
 
 and after that do the following:
+
 0) Use RouterOS 6.44 or 6.45.6 or 7.x(7.1rc4)!
 1) Upload(using FTP) content of ./for_ftp_upload/pub/* to /pub
      (or /flash or /flash/rw/disk/pub) folder on target RouterOS device
