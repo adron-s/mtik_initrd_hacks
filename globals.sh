@@ -1,10 +1,22 @@
 #!/bin/sh
 #
-#(C) Sergey Sergeev aka adron, 2019
+#(C) Sergey Sergeev aka adron, 2019-2021
 #
 
-TARGET_ARCH="arm"
+#rb5009
+TARGET_ARCH="aarch64"
+#rb3011(ipq806x), rb450dx4(ipq401x)
+#TARGET_ARCH="arm"
+#ath79, ramips
 #TARGET_ARCH="mips"
+
+TOOLS_BINS_PREFIX="openwrt-linux"
+
+[ ${TARGET_ARCH} = "aarch64" ] && {
+	OPENWRT_DIR=/home/prog/openwrt/2021-openwrt/last-openwrt/openwrt
+	export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-aarch64_cortex-a72_gcc-11.2.0_musl
+	TOOLS_BINS_PREFIX="$TOOLS_BINS_PREFIX-musl"
+}
 
 [ ${TARGET_ARCH} = "arm" ] && {
 	OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-ipq806x
@@ -19,7 +31,7 @@ TARGET_ARCH="arm"
 	export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-mips_24kc_gcc-7.3.0_musl
 }
 
-GCC=$STAGING_DIR/bin/${TARGET_ARCH}-openwrt-linux-gcc
-OBJDUMP=$STAGING_DIR/bin/${TARGET_ARCH}-openwrt-linux-objdump
-OBJCOPY=$STAGING_DIR/bin/${TARGET_ARCH}-openwrt-linux-objcopy
-LD=$STAGING_DIR/bin/${TARGET_ARCH}-openwrt-linux-ld
+GCC=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-gcc
+OBJDUMP=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-objdump
+OBJCOPY=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-objcopy
+LD=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-ld

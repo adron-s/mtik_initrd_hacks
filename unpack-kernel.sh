@@ -48,6 +48,7 @@ extract_kernel_elf(){
 	local offsets
 	local offset
 	local kernel_elf_size=0
+	local garbage_size=70
 	offsets=`kernel_bin_binwalk | sed -n 's/ELF,//p' | sed -n 's/^\([0-9]\+\).*/\1/p'`
 	local elf_last_offset
 	local first_xz_offset
@@ -60,6 +61,7 @@ extract_kernel_elf(){
 			first_xz_offset=${offset}
 			break
 		done
+		echo "${elf_last_offset} - ${first_xz_offset}"
 		#elf size without xz
 		kernel_elf_size=$((${first_xz_offset}-${elf_last_offset}))
 		local p
@@ -68,10 +70,15 @@ extract_kernel_elf(){
 			size=$(get_file_size ./bins/kernel.p${p}.xz)
 			kernel_elf_size=$((${kernel_elf_size}+${size}))
 		done
+		#dd if=./bins/kernel.bin bs=1 skip=${elf_last_offset} of=./bins/kernel-all.elf
 		dd if=./bins/kernel.bin bs=1 skip=${elf_last_offset} count=${kernel_elf_size} of=./bins/kernel.elf
 		[ -f ./bins/p3-garbage.bin ] && {
-			offset=484 #[ 45 00 00 00  00 00 00 00  00 00 00 00  01 00 00 00 ] <-- ${offset}
-			dd if=./bins/p3-garbage.bin bs=${offset} count=1 >> ./bins/kernel.elf
+			size=$(get_file_size ./bins/p3-garbage.bin)
+			#some of this data may be related to the elf (for 64-bit kernels - RB5009, ...\)
+			[ $size -gt $garbage_size ] && {
+				offset=$((size-garbage_size))
+				dd if=./bins/p3-garbage.bin bs=${offset} count=1 >> ./bins/kernel.elf
+			}
 		}
 	}
 }
@@ -94,6 +101,10 @@ extract_kernel_cpiofs(){
 	xzcat ${ROOT}/bins/kernel.p3.xz | cpio -idv
 	cp ./init ./oldinit
 }
+
+#extract_kernel_elf
+#unpack_kernel_bin
+#exit 0
 
 unpack_kernel_bin
 

@@ -68,8 +68,8 @@ int main(int argc, char *argv[]){
 	pid_t pid;
   argv[0] = "/oldinit";
 
-	environ[0] = "PATH=/sbin:/bin";
-	environ[1] = NULL;
+	//environ[0] = "PATH=/sbin:/bin";
+	//environ[1] = NULL;
 
 	pid = fork();
 	if(pid == (pid_t)0){ //child
