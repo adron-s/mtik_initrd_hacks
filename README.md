@@ -48,7 +48,7 @@ init файлом используется штатный механизм Route
 	/system/routerboard/settings/set boot-device=try-ethernet-once-then-nand
 	/system/reboot
 
-For Developers:
+How to cook:
 
 	Place routeros-XXX.mpk to ./ros/
 	cd ./finder
