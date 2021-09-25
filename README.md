@@ -28,6 +28,7 @@ and after that do the following:
 3) telnet x.x.x.x 22111
 
 Cyrillic:
+
 Все что вы делаете, вы делаете на свой страх и риск!
 Автор не несет никакой ответственности за ваши действия и их последствия!
 Данный код представляется as-is и исключительно в учебных целях -
@@ -43,10 +44,12 @@ init файлом используется штатный механизм Route
 с использованием dhcp/bootp и tftp сервера. dhcp/bootp сервером может выступать
 как другое устройство с RouterOS так и OpenWRT или даже программа tftp32.
 Для единоразового запуска с tftp вы можете выполнить следующие команды в RouterOS:
+
 	/system/routerboard/settings/set boot-device=try-ethernet-once-then-nand
 	/system/reboot
 
 For Developers:
+
 	Place routeros-XXX.mpk to ./ros/
 	cd ./finder
 	./Build.sh
