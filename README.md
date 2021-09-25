@@ -54,13 +54,13 @@ How to cook:
 	cd ./finder
 	./Build.sh
 	cd ..
-	edit ./globals.sh and set your target device ARCH: arm or mips
+	edit ./globals.sh and set your target device ARCH: arm or mips or aarch64
 	./unpack-npk.sh ./ros/routeros-mipsbe-6.45.6.npk
 	./unpack-kernel.sh
 	cd ./init
 	./compile.sh
 	cd ..
-	Make the necessary changes to the ./cpio-fs-ARCH(copy oldinit && order from ./bins/initramfs.cpio, compile add add busybox, etc...)
+	Make the necessary changes to the ./cpio-fs-ARCH(copy oldinit && order from ./bins/initramfs.cpio, compile and add busybox, etc...)
 	In the end, when everything is ready, to get ./bins/kernel-new.elf, run: ./pack-kernel.sh
 	Upload content of ./for_ftp_upload/pub/* to target RouterOS device via FTP(to /pub or /flash or ...)
 	Put ./bins/kernel-new.elf to your tftp and Netboot from it
