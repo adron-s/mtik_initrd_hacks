@@ -12,7 +12,7 @@ initrd mechanism. Native binary init file is replaced with a fake one. This modi
 init forks itself (spawning its daemon copy) and then pass control to the original init
 process. The begotten daemon copy waits for the filesystem to initialize and installs
 busybox and then launch the telnetd service. To run Linux kernel with modified init file,
-uses the standard RouterBOOT ability - loading via the network using dhcp/bootp and tftp
+uses the standard RouterBOOT ability - loading from network using dhcp/bootp and tftp
 server. dhcp/bootp server can be deployed on another device with RouterOS and OpenWRT or
 even tftp32 program. For a one-time launch with tftp, You can use this commands in RouterOS:
 	
