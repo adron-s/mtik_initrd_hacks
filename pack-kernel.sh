@@ -18,4 +18,9 @@ ${OBJCOPY} --update-section initrd=./bins/kernel-new.combo ./bins/kernel.elf ./b
 #cat ./bins/kernel-new.elf > /var/lib/tftpboot/linux_t1.bin
 
 #now update busybox for current ARCH
-cat ./cpio-fs-${TARGET_ARCH}/bin/busybox > ./for_ftp_upload/pub/OWL/bin/busybox
+BUSYBOX_FOR_ARCH="./busyboxes/${TARGET_ARCH}/busybox"
+if [ -f ${BUSYBOX_FOR_ARCH} ]; then
+	cat ${BUSYBOX_FOR_ARCH} > ./for_ftp_upload/pub/OWL/bin/busybox
+else
+	echo "Error: No busybox for TARGET_ARCH: ${TARGET_ARCH} !!!"
+fi

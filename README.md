@@ -15,7 +15,7 @@ busybox and then launch the telnetd service. To run Linux kernel with modified i
 uses the standard RouterBOOT ability - loading via the network using dhcp/bootp and tftp
 server. dhcp/bootp server can be deployed on another device with RouterOS and OpenWRT or
 even tftp32 program. For a one-time launch with tftp, You can use this commands in RouterOS:
-	
+
 	/system/routerboard/settings/set boot-device=try-ethernet-once-then-nand
 	/system/reboot
 
@@ -54,7 +54,7 @@ For Developers:
 	cd ./finder
 	./Build.sh
 	cd ..
-	edit ./globals.sh and set your target device ARCH: arm or mips
+	edit ./globals.sh and set your target device ARCH: aarch64 or arm or mips
 	./unpack-npk.sh ./ros/routeros-mipsbe-6.45.6.npk
 	./unpack-kernel.sh
 	cd ./init
@@ -65,3 +65,6 @@ For Developers:
 	Upload content of ./for_ftp_upload/pub/* to target RouterOS device via FTP(to /pub or /flash or ...)
 	Put ./bins/kernel-new.elf to your tftp and Netboot from it
 	telnet x.x.x.x 22111
+
+	If you want to boot the modified kernel from a flash drive, then place it in the /flash/boot dir:
+		nc x.x.x.y 1111 > /flash/boot/kernel

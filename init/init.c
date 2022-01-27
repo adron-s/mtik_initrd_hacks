@@ -7,9 +7,11 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <fcntl.h>
 #include <sys/stat.h>
 
-void my_system(char *cmd, char *arg1, char *arg2, char *arg3){
+void my_system(char *cmd, char *arg1, char *arg2, char *arg3)
+{
 	char *new_argv[] = { cmd, arg1, arg2, arg3, NULL };
 	pid_t pid;
 	pid = fork();
@@ -21,8 +23,23 @@ void my_system(char *cmd, char *arg1, char *arg2, char *arg3){
 	waitpid(pid, NULL, 0);
 }
 
+static void do_chmod(const char *fname, int perm)
+{
+	int fd;
+	fd = open(fname, O_RDONLY);
+	if (fd < 0) {
+		printf("do_chmod(): can't set permissions: %d to file: %s\n",
+			perm, fname);
+		return;
+	}
+	printf("Making %s executable\n", fname);
+	fchmod(fd, perm);
+	close(fd);
+}
+
 static char *work_dirs[ ] = { "/flash/rw/disk/pub", "/flash/rw/disk/flash/rw/disk/pub", NULL };
-void daemonized_OWL(void){
+void daemonized_OWL(void)
+{
 	int a = 0;
 	int ret = 0;
 	static char bin_busybox[128];
@@ -46,17 +63,17 @@ void daemonized_OWL(void){
 		printf("work_dir found at: '%s'\n", work_dir);
 		snprintf(bin_busybox, sizeof(bin_busybox), "%s/OWL/bin/busybox", work_dir);
 		snprintf(owl_sh, sizeof(owl_sh), "%s/OWL.sh", work_dir);
-		if(stat(bin_busybox, &sb) == 0 && !(sb.st_mode & S_IXUSR)){
-			printf("Making %s executable\n", bin_busybox);
-			my_system("/bin/busybox", "chmod", "777", bin_busybox);
+		if(stat(bin_busybox, &sb) == 0) {
+			if (sb.st_mode & S_IXUSR))
+				do_chmod(bin_busybox, 777);
+			my_system(bin_busybox, "sh", owl_sh, work_dir);
 		}
-		if(stat(owl_sh, &sb) == 0)
-			my_system("/bin/busybox", "sh", owl_sh, work_dir);
-		//my_system("/bin/busybox", "rm", "-Rf", "/flash/rw/disk/pub/OWL");
-		//my_system("/bin/busybox", "ls", "-l", "/flash/rw/disk/flash/rw/disk");
-		//my_system("/bin/busybox", "ls", "-l", "/system/flash/rw/disk/pub/OWL.sh");
-		//my_system("/bin/busybox", "ls", "-l", "/system/flash/rw/disk/pub");
-		//my_system("/bin/busybox", "--help", NULL);
+		//my_system(bin_busybox, "sh", owl_sh, work_dir);
+		//my_system(bin_busybox, "rm", "-Rf", "/flash/rw/disk/pub/OWL");
+		//my_system(bin_busybox, "ls", "-l", "/flash/rw/disk/flash/rw/disk");
+		//my_system(bin_busybox, "ls", "-l", "/system/flash/rw/disk/pub/OWL.sh");
+		//my_system(bin_busybox, "ls", "-l", "/system/flash/rw/disk/pub");
+		//my_system(bin_busybox, "--help", NULL);
 		//my_system("/order", "--help", NULL);
 		sleep(1);
 	}

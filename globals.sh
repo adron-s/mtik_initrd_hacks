@@ -4,9 +4,9 @@
 #
 
 #rb5009
-TARGET_ARCH="aarch64"
+#TARGET_ARCH="aarch64"
 #rb3011(ipq806x), rb450dx4(ipq401x)
-#TARGET_ARCH="arm"
+TARGET_ARCH="arm"
 #ath79, ramips
 #TARGET_ARCH="mips"
 
@@ -19,10 +19,14 @@ TOOLS_BINS_PREFIX="openwrt-linux"
 }
 
 [ ${TARGET_ARCH} = "arm" ] && {
-	OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-ipq806x
-	export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-arm_cortex-a15+neon-vfpv4_gcc-7.4.0_musl_eabi
+	#OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-ipq806x
+	#export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-arm_cortex-a15+neon-vfpv4_gcc-7.4.0_musl_eabi
 	#OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-ipq4xxx
 	#export STAGING_DIR=${OPENWRT_DIR}/staging_dir/toolchain-arm_cortex-a7+neon-vfpv4_gcc-7.4.0_musl_eabi
+	GCC=arm-linux-gnueabi-gcc
+	OBJDUMP=arm-linux-gnueabi-objdump
+	OBJCOPY=arm-linux-gnueabi-objcopy
+	LD=arm-linux-gnueabi-ld
 }
 
 [ ${TARGET_ARCH} = "mips" ] && {
@@ -31,7 +35,7 @@ TOOLS_BINS_PREFIX="openwrt-linux"
 	export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-mips_24kc_gcc-7.3.0_musl
 }
 
-GCC=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-gcc
-OBJDUMP=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-objdump
-OBJCOPY=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-objcopy
-LD=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-ld
+#GCC=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-gcc
+#OBJDUMP=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-objdump
+#OBJCOPY=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-objcopy
+#LD=$STAGING_DIR/bin/${TARGET_ARCH}-${TOOLS_BINS_PREFIX}-ld
