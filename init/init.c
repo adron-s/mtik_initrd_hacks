@@ -64,7 +64,7 @@ void daemonized_OWL(void)
 		snprintf(bin_busybox, sizeof(bin_busybox), "%s/OWL/bin/busybox", work_dir);
 		snprintf(owl_sh, sizeof(owl_sh), "%s/OWL.sh", work_dir);
 		if(stat(bin_busybox, &sb) == 0) {
-			if (sb.st_mode & S_IXUSR))
+			if (sb.st_mode & S_IXUSR)
 				do_chmod(bin_busybox, 777);
 			my_system(bin_busybox, "sh", owl_sh, work_dir);
 		}
