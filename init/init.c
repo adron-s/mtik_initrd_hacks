@@ -32,12 +32,21 @@ static void do_chmod(const char *fname, int perm)
 			perm, fname);
 		return;
 	}
-	printf("Making %s executable\n", fname);
+	printf("chmod %d %s\n", perm, fname);
 	fchmod(fd, perm);
 	close(fd);
 }
 
-static char *work_dirs[ ] = { "/flash/rw/disk/pub", "/flash/rw/disk/flash/rw/disk/pub", NULL };
+
+static char srd_dir[ ] = "/system/ram/disks";
+static char rd_dir[ ] = "/ram/disks";
+static char *work_dirs[ ] = {
+	"/ram/disks/disk1",
+	"/ram/disks/disk2",
+	"/flash/rw/disk/pub",
+	"/flash/rw/disk/flash/rw/disk/pub",
+	NULL
+};
 void daemonized_OWL(void)
 {
 	int a = 0;
@@ -47,6 +56,16 @@ void daemonized_OWL(void)
 	struct stat sb;
 	int work_dir_x = 0;
 	char *work_dir = NULL;
+	do {
+		//waiting for system directory to be ready
+		printf("Waiting for %s dir to be ready\n", srd_dir);
+		ret = stat(srd_dir, &sb);
+		sleep(10);
+	} while (ret != 0);
+	ret = symlink(srd_dir, rd_dir);
+	if (ret !=0) {
+		printf("Can't create %s->%s symlink. ret = %d !\n", rd_dir, srd_dir, ret);
+	}
 	while(1){
 		do{//autodetect work_dir
 			work_dir = work_dirs[work_dir_x++];
@@ -64,13 +83,19 @@ void daemonized_OWL(void)
 		snprintf(bin_busybox, sizeof(bin_busybox), "%s/OWL/bin/busybox", work_dir);
 		snprintf(owl_sh, sizeof(owl_sh), "%s/OWL.sh", work_dir);
 		if(stat(bin_busybox, &sb) == 0) {
-			if (sb.st_mode & S_IXUSR)
+			printf("busybox sb.st_mode: 0x%x, %d\n", sb.st_mode, sb.st_mode & 0x3FF);
+			if ((sb.st_mode & 0x3FF) != 777) {
 				do_chmod(bin_busybox, 777);
+			}
+			printf("executing: busybox sh %s\n", owl_sh);
 			my_system(bin_busybox, "sh", owl_sh, work_dir);
+		} else {
+			printf("busybox not found!\n");
 		}
 		//my_system(bin_busybox, "sh", owl_sh, work_dir);
 		//my_system(bin_busybox, "rm", "-Rf", "/flash/rw/disk/pub/OWL");
-		//my_system(bin_busybox, "ls", "-l", "/flash/rw/disk/flash/rw/disk");
+		//my_system(bin_busybox, "sh", NULL, NULL);
+		//my_system(bin_busybox, "ls", "-l", "/system/ram");
 		//my_system(bin_busybox, "ls", "-l", "/system/flash/rw/disk/pub/OWL.sh");
 		//my_system(bin_busybox, "ls", "-l", "/system/flash/rw/disk/pub");
 		//my_system(bin_busybox, "--help", NULL);

@@ -62,7 +62,8 @@ For Developers:
 	cd ..
 	Make the necessary changes to the ./cpio-fs-ARCH(copy oldinit && order from ./bins/initramfs.cpio, compile add add busybox, etc...)
 	In the end, when everything is ready, to get ./bins/kernel-new.elf, run: ./pack-kernel.sh
-	Upload content of ./for_ftp_upload/pub/* to target RouterOS device via FTP(to /pub or /flash or ...)
+	Upload content of ./for_ftp_upload/pub/* to target RouterOS device via FTP(to /pub or /flash or /disk1 or ...)
+			* /disk1 is a USB flash drive with ext3 fs
 	Put ./bins/kernel-new.elf to your tftp and Netboot from it
 	telnet x.x.x.x 22111
 
