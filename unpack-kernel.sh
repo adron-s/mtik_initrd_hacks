@@ -117,5 +117,5 @@ unpack_kernel_bin
 extract_kernel_elf
 
 #if cpio-fs dir is empty
-ls -1qA ./cpio-fs-mips/ | grep -q . || \
+ls -1qA ./cpio-fs-${TARGET_ARCH}/ | grep -q . || \
 extract_kernel_cpiofs
