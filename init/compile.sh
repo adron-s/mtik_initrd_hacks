@@ -28,7 +28,7 @@ CPIO_FS="../cpio-fs-${TARGET_ARCH}"
 $GCC $GCC_ARGS ./init.c -o ${CPIO_FS}/init
 $OBJCOPY --strip-all ${CPIO_FS}/init ${CPIO_FS}/init
 
-#exit 0
+exit 0
 
 cd ../
 ./pack-kernel.sh

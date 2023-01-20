@@ -11,6 +11,9 @@ kernel_bin_binwalk(){
 		_kernel_bin_binwalk=$(binwalk ./bins/kernel.bin)
 	echo "${_kernel_bin_binwalk}"
 }
+kernel_bin_binwalk_rawelf() {
+	binwalk ./bins/kernel.bin --raw "\177ELF"
+}
 
 get_xz_offsets(){
 	kernel_bin_binwalk | grep "xz compressed data" | sed -n 's/^\([0-9]\+\).*/\1/p'
@@ -52,9 +55,20 @@ extract_kernel_elf(){
 	offsets=`kernel_bin_binwalk | sed -n 's/ELF,//p' | sed -n 's/^\([0-9]\+\).*/\1/p'`
 	local elf_last_offset
 	local first_xz_offset
+	[ -z  "${offsets}" ] && {
+		echo "Warning: trying Raw ELF signatures search !"
+		offsets=`kernel_bin_binwalk_rawelf | sed -n 's/Raw signature//p' | sed -n 's/^\([0-9]\+\).*/\1/p'`
+		[ -z "${offsets}" ] && {
+			echo "NO ELF offsets found in kernel.bin !!!"
+			exit 100
+		}
+	}
 	for offset in ${offsets}; do
 		elf_last_offset=${offset}
 	done
+	[ -z "${elf_last_offset}" ] && {
+		[ -z "${elf_last_offset}" ] &&	exit 100
+	}
 	[ -n "${elf_last_offset}" ] && {
 		offsets=$(get_xz_offsets)
 		for offset in ${offsets}; do
