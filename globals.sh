@@ -7,9 +7,9 @@
 #TARGET_ARCH="aarch64"
 #rb3011(ipq806x), rb450dx4(ipq401x)
 #TARGET_ARCH="arm"
-TARGET_ARCH="mipsel"
+#TARGET_ARCH="mipsel"
 #ath79, ramips
-#TARGET_ARCH="mips"
+TARGET_ARCH="mips"
 
 TOOLS_BINS_PREFIX="openwrt-linux"
 
@@ -31,11 +31,9 @@ TOOLS_BINS_PREFIX="openwrt-linux"
 }
 
 [ ${TARGET_ARCH} = "mips" ] && {
-	#I use: https://downloads.openwrt.org/releases/18.06.4/targets/ar71xx/generic/openwrt-sdk-18.06.4-ar71xx-generic_gcc-7.3.0_musl.Linux-x86_64.tar.xz
-	OPENWRT_DIR=/home/prog/openwrt/lede-all/2019-openwrt-all/openwrt-sdk-18.06.4-ar71xx-generic_gcc-7.3.0_musl.Linux-x86_64
-	export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-mips_24kc_gcc-7.3.0_musl
+	OPENWRT_DIR=/home/prog/openwrt/2023-openwrt/openwrt-2023
+	export STAGING_DIR=$OPENWRT_DIR/staging_dir/toolchain-mips_24kc_gcc-11.2.0_musl
 }
-
 
 [ ${TARGET_ARCH} = "mipsel" ] && {
 	OPENWRT_DIR=/home/prog/openwrt/2023-openwrt/openwrt-2023
