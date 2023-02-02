@@ -8,10 +8,10 @@
 GCC_ARGS="-static"
 #for 7.0rc1 we need gcc with soft-float ONLY!
 #apt-get install gcc-arm-linux-gnueabi
-[ ${TARGET_ARCH} = "arm" ] && {
-	GCC=arm-linux-gnueabi-gcc
-	OBJCOPY=arm-linux-gnueabi-objcopy
-}
+#[ ${TARGET_ARCH} = "arm" ] && {
+#	GCC=arm-linux-gnueabi-gcc
+#	OBJCOPY=arm-linux-gnueabi-objcopy
+#}
 
 [ ${TARGET_ARCH} = "aarch64" ] && {
 	GCC=arm-linux-gnueabihf-gcc
